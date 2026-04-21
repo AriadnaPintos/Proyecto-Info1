@@ -3,6 +3,7 @@ Júlia Adrubau, Ariadna Pintos i Pau Tondo.
 
 ## Versió 1
 En la versió 1 del projecte s’han desenvolupat els fitxers airport.py, test_airport.py i interface.py, implementant la classe Airport amb els seus atributs bàsics i les funcionalitats per gestionar aeroports (carregar, afegir, eliminar i modificar l’estat Schengen). Mitjançant un altre programa anomenat test_airport.py, hem pogut comprovar exitosament el funcionament de les funcions creades al fitxer airport.py i les hem afegit a la interfície. A la interfície (interface.py) s'hi han integrat les diferents funcionalitats dels botons, però faltaria afegir la llista corresponent amb l'informació del avions, del fitxer (airports.txt), i la integració dels gràfics i el Google Earth dins de la mateixa pestanya.
+
 Link al vídeo de la versió 1: https://drive.google.com/file/d/1behWJ3YxZa6cuwD9R_OPxWJ-vII4jdmq/view?usp=sharing
 
 ## Versió 2
