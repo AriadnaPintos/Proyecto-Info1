@@ -133,37 +133,3 @@ def PlotAirports(airports):
     plt.bar(labels, [non_schengen_count], label = "Non-Schengen", bottom=[schengen_count], color = "pink")
     plt.legend()
     plt.show()
-
-import os
-
-def MapAirports(airports):
-    F = open("AirportsMap.kml", "w")
-    F.write("<?xml version='1.0' encoding='UTF-8'?>\n")
-    F.write("<kml xmlns='http://www.opengis.net/kml/2.2'>\n")
-    F.write("<Document>\n")
-
-    #Creem els dos icones per diferenciar espai Schengen de non-schengen
-    F.write("<Style id='Schengen'><IconStyle><color>ff00ff00</color></IconStyle></Style>\n")
-    F.write("<Style id='Non-schengen'><IconStyle><color>ff0000ff</color></IconStyle></Style>\n")
-
-    i = 0
-    while i < len(airports):
-        F.write("<Placemark>\n")
-        F.write("<name>" + airports[i].icao + "</name>\n")
-        SetSchengen(airports[i])
-        if airports[i].schengen == True:
-            F.write("  <styleUrl>#Schengen</styleUrl>\n")
-        else:
-            F.write("  <styleUrl>#Non-schengen</styleUrl>\n")
-
-        F.write("<Point>\n")
-        F.write("<coordinates>" + str(airports[i].longitude) + "," + str(airports[i].latitude) + "</coordinates>\n")
-        F.write("</Point>\n")
-        F.write("</Placemark>\n")
-        i = i + 1
-
-    F.write("</Document>\n")
-    F.write("</kml>\n")
-    F.close()
-
-    os.startfile("AirportsMap.kml") #Funcionalitat perquè el mapa s'obri directament a l'app google earth, sinó s'hauria de descarregar i obrir el document manualment.

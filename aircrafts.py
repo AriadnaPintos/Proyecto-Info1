@@ -106,6 +106,11 @@ def PlotArrivals(aircrafts):
     plt.show()
 
 def SaveFlights(aircrafts, filename):
+    '''
+    Guarda la llista d'aeronaus en un fitxer de text nou. Recorre l'arxiu Arrivals.txt i si qualsevol camp està buit,
+    el substitueix per un guió ("-") o per "00:00" en el cas de l'hora d'arribada.
+    '''
+
     if len(aircrafts) == 0:
         print("Error: La llista de vols està buida.")
         return "Error"
@@ -147,6 +152,11 @@ def SaveFlights(aircrafts, filename):
 
 
 def PlotAirlines(aircrafts):
+    '''
+        Compta quants vols té cada aerolínia en la llista i mostra un gràfic de barres
+        comparatiu amb el volum de vols per companyia.
+    '''
+
     if len(aircrafts) == 0:
         print("Error: No hi ha avions pel gràfic.")
         return
@@ -407,7 +417,6 @@ def LongDistanceArrivals(aircrafts):
 
 if __name__ == "__main__":
     aircrafts = LoadArrivals("arrivals.txt")
-
     print("Nombre d'aeronaus carregades:", len(aircrafts))
 
     print("\n--- PlotArrivals ---")

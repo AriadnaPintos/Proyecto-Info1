@@ -592,6 +592,13 @@
 </Point>
 </Placemark>
 <Placemark>
+<name>LEBL</name>
+  <styleUrl>#Schengen</styleUrl>
+<Point>
+<coordinates>2.0783333333333336,41.29694444444444</coordinates>
+</Point>
+</Placemark>
+<Placemark>
 <name>LEBZ</name>
   <styleUrl>#Schengen</styleUrl>
 <Point>
