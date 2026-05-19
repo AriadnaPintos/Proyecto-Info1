@@ -28,7 +28,8 @@ En aquesta versió s'han millorat i integrat un mapa del Google Earth a la inter
 Aquest conjunt de funcions ens permet gestionar l'estructura i l'operativitat diària de l'aeroport de Barcerlona (LEBL). Primer es configuren els elements mitjançant la funció "SetGates", que crea i inicialitza les portes d'embarcament assigant-les-hi un prefix i marcant-les om a lliures o ocupades i amb "LoadAirlines" carrega les aerolínies d'una terminal des d'un fitxer de text. Aquestes dues funcions mencionades anteriorment, son utilitzades per una tercera funció anomenada "LoadAirportsStructure" que s'encarrega de configurar tot l'aeroport a partir d'un únic fitxer centralitzat.
 Pel que fa a la gestió de la informació la funció "GateOccupancy" genera una llista amb el nom i l'estat d'ocupació de cadap porta. D'altra banda, "IsAirlineInTerminal" comprova si una companyia opera una terminal concreta. "SearchTerminal" busca i retorna la terminal assignada a cada aerolínia. Per últim, "AssignGate" coordina les funcions anteriors i troba la zona d'embarcament correcta, assignant la porta que estigui lliure.
 
-[Link al video de la versió 3]
+[Link al video de la versió 3](https://drive.google.com/file/d/1JY11WIZbC04W4K5eMxFr69Em97oxXDHS/view?usp=drive_link)
+
 
 
 
