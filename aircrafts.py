@@ -233,8 +233,17 @@ def IsSchengenAirport(icao):
         return False
 
 def PlotFlightsType(aircrafts):
-    #Rep una llista d'aeronaus i mostra un stacked bar plot amb el nombre de vols Schengen i no Schengen.
-    #Si la llista és buida, mostra error i no dibuixa res.
+    '''
+        Rep una llista d'avions on mostra un gràfic (plot) amb el nombre de vols Schengen
+        i els no Schengen. Si la llista és buida, mostra un error i no dibuixa res.
+        Utilitzant els paràmetres:
+            aircrafts : list
+                [Llista d'objectes d'aeronaus (cada una ha de tenir l'atribut '.origin'
+                amb el codi ICAO de l'aeroport de sortida)].
+        Retorna:None
+            [No retorna cap valor, mostra el gràfic directament a la pantalla].
+    '''
+
     if len(aircrafts) == 0:
         print("Error: La llista d'aeronaus està buida. No es pot generar el gràfic.")
         return
@@ -267,6 +276,17 @@ def PlotFlightsType(aircrafts):
     plt.show()
 
 def MapFlights(aircrafts):
+    '''
+    Genera un arxiu KML per mostrar a un mapa de Google Earth les trajectòries
+    dels vols amb destí LEBL (Barcelona), diferenciant amb colors les rutes
+    depenent si pertanyen a l'espai Schengen o no.
+    Utilitza els següents paràmetres:
+        aircrafts (list): Llista d'objectes d'aeronaus (cada una ha de tenir
+                          l'atribut '.origin' amb el codi ICAO de l'aeroport de sortida).
+    Retorna:
+        None. No retorna cap valor, genera el fitxer 'flights_map.kml' en el disc
+        i l'obre automàticament.
+    '''
     #Mostra a Google Earth les trajectòries dels vols de la llista,de l'aeroport d'origen LEBL.
     #Mostra en diferents colors les trajectòries amb origen en un pais Schengen.
 
@@ -347,6 +367,16 @@ def MapFlights(aircrafts):
     os.startfile("flights_map.kml")  # Funcionalitat perquè el mapa s'obri directament a l'app google earth, sinó s'hauria de descarregar i obrir el document manualment.
 
 def HaversineDistance(lat1, lon1, lat2, lon2):
+    '''
+    Calcula la distància geodèsica de Haversine entre dos punts de la Terra.
+    Utilitza els següents paràmetres:
+        lat1 (float): Latitud del primer punt en graus.
+        lon1 (float): Longitud del primer punt en graus.
+        lat2 (float): Latitud del segon punt en graus.
+        lon2 (float): Longitud del segon punt en graus.
+    Retorna:
+        float: La distància calculada entre els dos punts expressada en quilòmetres (km).
+    '''
     #Calcula la distància Haversine entre dos punts de la Terra.
     # Les latituds i longituds estan en graus.
     # Retorna la distància en km.
@@ -369,6 +399,18 @@ def HaversineDistance(lat1, lon1, lat2, lon2):
 
 
 def LongDistanceArrivals(aircrafts):
+    '''
+    Filtra i retorna una llista amb les aeronaus que tenen el seu aeroport
+    d'origen a una distància superior a 2000 km respecte a Barcelona (LEBL).
+    Utilitza la fórmula de Haversine per calcular la distància geodèsica
+    entre les coordenades dels aeroports.
+    Utilitza els següents paràmetres:
+        aircrafts (list): Llista d'objectes d'aeronaus (cada una ha de tenir
+                          l'atribut '.origin' amb el codi ICAO de l'aeroport de sortida).
+
+    Retorna una llista que conté només els objectes d'aeronaus que superen
+    els 2000 km de distància, o una llista buida [] en cas d'error o no haver-hi coincidències.
+    '''
     #Retorna una llista amb les aeronaus que arriben a LEBL des d'un aeroport a més de 2000 km de distància.
     if len(aircrafts) == 0:
         return []
