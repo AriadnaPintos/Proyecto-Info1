@@ -23,3 +23,12 @@ En la versió 2 del projecte s’ha desenvolupat el fitxer aircraft.py, on s’h
 
 [Link al video de la versió 2](https://drive.google.com/file/d/1fmZLGcbT3g-fjuj8RVmSJddWe17uQ-pr/view?usp=drive_link)
 
+## Versió 3
+En aquesta versió s'han millorat i integrat un mapa del Google Earth a la interficie. S'han creat quatre classes (BarcelonaAP, Terminal, BoardingAreas i Gates) i vuit funcions noves.
+Aquest conjunt de funcions ens permet gestionar l'estructura i l'operativitat diària de l'aeroport de Barcerlona (LEBL). Primer es configuren els elements mitjançant la funció "SetGates", que crea i inicialitza les portes d'embarcament assigant-les-hi un prefix i marcant-les om a lliures o ocupades i amb "LoadAirlines" carrega les aerolínies d'una terminal des d'un fitxer de text. Aquestes dues funcions mencionades anteriorment, son utilitzades per una tercera funció anomenada "LoadAirportsStructure" que s'encarrega de configurar tot l'aeroport a partir d'un únic fitxer centralitzat.
+Pel que fa a la gestió de la informació la funció "GateOccupancy" genera una llista amb el nom i l'estat d'ocupació de cadap porta. D'altra banda, "IsAirlineInTerminal" comprova si una companyia opera una terminal concreta. "SearchTerminal" busca i retorna la terminal assignada a cada aerolínia. Per últim, "AssignGate" coordina les funcions anteriors i troba la zona d'embarcament correcta, assignant la porta que estigui lliure.
+
+[Link al video de la versió 3]
+
+
+
