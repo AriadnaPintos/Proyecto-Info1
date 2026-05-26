@@ -10,7 +10,9 @@
 ## AUTORS I CONTINGUTS
 Aquest projecte ha estat desenvolupat pels membres del Grup 5: Ariadna Pintos, Pau Tondo i Júlia Adrubau; amb l'objectiu de desenvolupar un programa de gestió aeroportuària per tal d'analitzar els vols de l'Aeroport Josep Tarradelles Barcelona-El Prat (LEBL)
 ## DESENVOLUPAMENT DEL PROJECTE
-El programa s'ha fet en quatre versions diferents (de les quals només dues estan actives actualment). 
+El programa s'ha fet en quatre versions diferents (de les quals només dues estan actives actualment).
+
+<img src="ImatgeDeGrup.jpeg" width="500">
 
 ## Versió 1 
 En la versió 1 del projecte s’han desenvolupat els fitxers airport.py, test_airport.py i interface.py, implementant la classe Airport amb els   seus atributs bàsics i les funcionalitats per gestionar aeroports (carregar, afegir, eliminar i modificar l’estat Schengen). Mitjançant un altre programa anomenat test_airport.py, hem pogut comprovar exitosament el funcionament de les funcions creades al fitxer airport.py i les hem afegit a la interfície. A la interfície (interface.py) s'hi han integrat les diferents funcionalitats dels botons, però faltaria afegir la llista corresponent amb l'informació del avions, del fitxer (airports.txt), i la integració dels gràfics i el Google Earth dins de la mateixa pestanya.
