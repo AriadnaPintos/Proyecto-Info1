@@ -50,6 +50,8 @@ Pel que fa a la conscienciació ambiental, la funció de càlcul d'emprempta de 
 
 Finalment, s'ha incorporat un Assistent de Connexions i Transbords enfocat a l'experiència de l'usuari, el qual avalua la viabilitat d'enllaçar dos vols consecutius calculant automàticament el temps real necessari per al desplaçament en contrast amb el temps disponible; la funció detalla els minuts restants de marge i determina si el passatger ha de passar o no per un control de passaports segons la naturalesa i procedència dels vols (tipus Schengen o No-Schengen).
 
+[Link al video de la versió 4]((https://drive.google.com/file/d/1znWuIunp2UdZyBViWnNYJrFzSnbgVaA5/view?usp=drive_link))
+
 
 
 
