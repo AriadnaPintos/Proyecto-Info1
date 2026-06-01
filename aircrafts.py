@@ -276,33 +276,23 @@ def PlotFlightsType(aircrafts):
     plt.tight_layout()
     plt.show()
 
-def MapFlights(aircrafts):
+def MapFlights(aircrafts, frame=None):
     '''
-    Genera un arxiu KML per mostrar a un mapa de Google Earth les trajectòries
-    dels vols amb destinació LEBL (Barcelona), diferenciant amb colors les rutes
-    depenent si pertanyen a l'espai Schengen o no.
-    Utilitza els següents paràmetres:
-        aircrafts (list): Llista d'objectes d'aeronaus (cada una ha de tenir
-                          l'atribut '.origin' amb el codi ICAO de l'aeroport de sortida).
-    Retorna:
-        None. No retorna cap valor, genera el fitxer 'flights_map.kml' en el disc
-        i l'obre automàticament.
-    '''
-    # Mostra a Google Earth les trajectòries dels vols de la llista, de l'aeroport d'origen a LEBL.
-    # Mostra en diferents colors les trajectòries amb origen en un país Schengen.
-
+        Implementa una interfície geogràfica utilitzant tkintermapview. Localitza LEBL
+        i dibuixa marcadors per a cada origen. Les línies de ruta es coloren dinàmicament:
+        blau per a vols Schengen i taronja per a vols que requereixen control fronterer.
+        '''
     if len(aircrafts) == 0:
         print("Error: La llista d'aeronaus està buida.")
         return
-
-    try:
-        from airport import LoadAirports
-    except ImportError:
-        print("Error: No s'ha pogut importar airport.py")
+    if frame is None:
+        print("Error: No s'ha definit un frame per al mapa.")
         return
 
-    airports = LoadAirports("airports.txt")
+    from airport import LoadAirports, IsSchengenAirport
+    import tkintermapview
 
+    airports = LoadAirports("airports.txt")
     if len(airports) == 0:
         print("Error: No s'han pogut carregar els aeroports.")
         return
@@ -312,60 +302,48 @@ def MapFlights(aircrafts):
         while i < len(airports):
             if airports[i].icao == code:
                 return airports[i]
-            i = i + 1
+            i += 1
         return None
 
     airport_bcn = FindAirport("LEBL", airports)
-
-    if airport_bcn == None:
+    if airport_bcn is None:
         print("Error: No s'ha trobat LEBL al fitxer d'aeroports.")
         return
 
-    f = open("flights_map.kml", "w", encoding="utf-8")
+    # Netejar el frame i dibuixar el mapa
+    for widget in frame.winfo_children():
+        widget.destroy()
 
-    f.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
-    f.write('<Document>\n')
+    map_widget = tkintermapview.TkinterMapView(frame, corner_radius=0)
+    map_widget.pack(fill="both", expand=True)
+    map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
+    map_widget.set_position(airport_bcn.latitude, airport_bcn.longitude)
+    map_widget.set_zoom(4)
+
+    # Marcador LEBL
+    map_widget.set_marker(airport_bcn.latitude, airport_bcn.longitude,
+                          text="LEBL", marker_color_circle="#3B5266",
+                          marker_color_outside="#F4F1EA", text_color="#2B2A28",
+                          font=("Helvetica", 10, "bold"))
 
     i = 0
     while i < len(aircrafts):
         ac = aircrafts[i]
-        airport_origin = FindAirport(ac.origin, airports)
+        origin = FindAirport(ac.origin, airports)
+        if origin is not None:
+            color = "#5A7FB5" if IsSchengenAirport(ac.origin) else "#C47B6A"
+            # Marcador origen
+            map_widget.set_marker(origin.latitude, origin.longitude,
+                                  text=ac.origin, marker_color_circle=color,
+                                  marker_color_outside="#F4F1EA", text_color="#2B2A28",
+                                  font=("Helvetica", 9, "bold"))
+            # Línia de ruta
+            map_widget.set_path([(origin.latitude, origin.longitude),
+                                  (airport_bcn.latitude, airport_bcn.longitude)],
+                                 color=color, width=2)
+        i += 1
 
-        if airport_origin != None:
-            # Color diferent segons Schengen
-            if IsSchengenAirport(ac.origin):
-                color = "ff0000ff"   # Blau (format KML)
-            else:
-                color = "ff00ff00"   # Verd
-
-            f.write('<Placemark>\n')
-            f.write('<name>Ruta ' + ac.origin + ' - LEBL</name>\n')
-            f.write('<Style>\n')
-            f.write('<LineStyle>\n')
-            f.write('<color>' + color + '</color>\n')
-            f.write('<width>2</width>\n')
-            f.write('</LineStyle>\n')
-            f.write('</Style>\n')
-            f.write('<LineString>\n')
-            f.write('<altitudeMode>clampToGround</altitudeMode>\n')
-            f.write('<extrude>1</extrude>\n')
-            f.write('<tessellate>1</tessellate>\n')
-            f.write('<coordinates>\n')
-            f.write(str(airport_origin.longitude) + ',' + str(airport_origin.latitude) + '\n')
-            f.write(str(airport_bcn.longitude) + ',' + str(airport_bcn.latitude) + '\n')
-            f.write('</coordinates>\n')
-            f.write('</LineString>\n')
-            f.write('</Placemark>\n')
-
-        i = i + 1
-
-    f.write('</Document>\n')
-    f.write('</kml>\n')
-    f.close()
-
-    print("Arxiu flights_map.kml creat correctament.")
-
-    os.startfile("flights_map.kml")  # Obre el mapa directament a l'aplicació Google Earth.
+    print(f"Mapa de vols generat amb {len(aircrafts)} rutes.")
 
 def HaversineDistance(lat1, lon1, lat2, lon2):
     '''
@@ -740,3 +718,47 @@ if __name__ == "__main__":
     print(f"\n  Aeronaus nocturnes trobades: {len(nocturnes)}")
     for ac in nocturnes[:10]:   # Mostrem fins a 10 exemples
         print(f"  {ac.id:10s}  dest={ac.destination:4s}  sortida={ac.departure:5s}  aerolinia={ac.airline}")
+
+def CheckConnection(arrival_flight, departure_flight, airports_list):
+    """
+    Comprova si un passatger té temps suficient per fer la connexió entre
+    un vol d'arribada i un de sortida a LEBL.
+
+    Paràmetres:
+        arrival_flight   – Aircraft amb dades d'arribada (arrival, origin)
+        departure_flight – Aircraft amb dades de sortida (departure, destination)
+        airports_list    – llista d'objectes Airport per consultar si són Schengen
+
+    Retorna un diccionari amb:
+        'viable'       – True/False
+        'margin_min'   – minuts de marge (positiu = suficient, negatiu = no arriba)
+        'requires_passport' – True si cal passar per control de passaports
+        'min_required' – temps mínim necessari en minuts
+    """
+    arr_min  = _time_to_minutes(arrival_flight.arrival)
+    dep_min  = _time_to_minutes(departure_flight.departure)
+
+    if arr_min == -1 or dep_min == -1:
+        return None   # Dades incompletes
+
+    # Determinar tipus Schengen de cada vol
+    origin_schengen = IsSchengenAirport(arrival_flight.origin)
+    dest_schengen   = IsSchengenAirport(departure_flight.destination)
+
+    # Cal control de passaports si un vol és Schengen i l'altre no
+    requires_passport = (origin_schengen != dest_schengen)
+
+    # Temps mínim de connexió:
+    #   45 min  → Schengen a Schengen (mateixa zona, sense controls)
+    #   90 min  → qualsevol combinació que impliqui control de passaports
+    min_required = 90 if requires_passport else 45
+
+    available = dep_min - arr_min
+    margin    = available - min_required
+
+    return {
+        'viable':             margin >= 0,
+        'margin_min':         margin,
+        'requires_passport':  requires_passport,
+        'min_required':       min_required,
+    }

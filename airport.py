@@ -1,5 +1,8 @@
 class Airport:
-    # Classe de definició d'aeroport
+    '''
+        Classe que representa un aeroport.
+        Guarda el codi ICAO, latitud, longitud i si és Schengen (per defecte False).
+        '''
     def __init__(self, code, lat, lon):
         self.icao = code
         self.latitude = lat
@@ -7,7 +10,10 @@ class Airport:
         self.schengen = False
 
 def IsSchengenAirport(code):
-    # llista de paisos que son schengen
+    '''
+        Rep un codi ICAO i retorna True si l'aeroport és d'un país Schengen.
+        Ho comprova mirant si els 2 primers caràcters del codi estan a la llista de prefixos Schengen.
+        '''
     lista = ['LO', 'EB', 'LK', 'LC', 'EK', 'EE', 'EF', 'LF', 'ED', 'LG', 'EH', 'LH', 'BI', 'LI', 'EV', 'EY', 'EL', 'LM','EN', 'EP', 'LP', 'LZ', 'LJ', 'LE', 'ES', 'LS']
     if not code:
         return False
@@ -22,13 +28,24 @@ def IsSchengenAirport(code):
     return encontrado
 
 def SetSchengen(airport):
-    #poso si es schengen o no a l'aeroport com a resultat de la funció pasant-li el codi ICAO de l'aeroport
+    '''
+       Rep un objecte Airport i actualitza el seu atribut schengen
+       cridant IsSchengenAirport amb el seu codi ICAO.
+       '''
     airport.schengen = IsSchengenAirport(airport.icao)
 
 def PrintAirport(airport):
+    '''
+       Mostra per pantalla tots els atributs d'un aeroport en format diccionari.
+       '''
     print(airport.__dict__)
 
 def LoadAirports (filename):
+    '''
+        Llegeix un fitxer de text amb dades d'aeroports i retorna una llista d'objectes Airport.
+        Salta les dues primeres línies (capçaleres) i converteix les coordenades
+        de format DMS (graus, minuts, segons) a decimal. S i W es fan negatius.
+        '''
     F = open(filename, "r")
     linea = F.readline()
     linea = F.readline()
@@ -59,7 +76,11 @@ def LoadAirports (filename):
     return lista_
 
 def SaveSchengenAirports(airports, filename):
-    #Si l'aeroport és schengen ho fiquem en un nou doc
+    '''
+       Guarda en un fitxer nou només els aeroports que tenen schengen = True.
+       Si la llista és buida, mostra un error i no fa res.
+       Escriu una capçalera i després una línia per cada aeroport Schengen.
+       '''
     if len(airports) == 0:
         print("Error, la lista está vacia.")
         return "Error"
@@ -75,7 +96,10 @@ def SaveSchengenAirports(airports, filename):
     print("Schengen aeropuerto guardado con éxito.")
 
 def AddAirport(airports, airport):
-    # donada una llista d'entrada i un aeroport mirem si està a la llista i sinó l'afegim
+    '''
+       Afegeix un aeroport a la llista només si el seu codi ICAO no hi és ja.
+       Retorna True si s'ha afegit, False si ja existia.
+       '''
     encontrado = False
     i = 0
     while i < len(airports) and not encontrado:
@@ -91,7 +115,11 @@ def AddAirport(airports, airport):
         return False
 
 def RemoveAirport(airports, code):
-    #Eliminar els aeroports
+    '''
+       Elimina de la llista l'aeroport amb el codi ICAO indicat.
+       Ho fa desplaçant tots els elements posteriors una posició cap enrere
+       i eliminant l'últim element. Retorna True si s'ha eliminat, False si no s'ha trobat.
+       '''
     encontrado = False
     i = 0
     while i < len(airports) and not encontrado:
@@ -114,6 +142,12 @@ def RemoveAirport(airports, code):
 import matplotlib.pyplot as plt
 
 def PlotAirports(airports):
+    '''
+        Genera un gràfic de barres apilades que mostra quants aeroports són Schengen
+        i quants no ho són. Primer actualitza l'atribut schengen de cada aeroport
+        i els compta, després dibuixa la barra amb dos colors: blau (Schengen) a baix
+        i rosa (No-Schengen) a dalt.
+        '''
     schengen_count = 0
     non_schengen_count = 0
     i = 0
