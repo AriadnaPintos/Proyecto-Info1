@@ -41,6 +41,8 @@ Aquest conjunt de funcions ens permet gestionar l'alliberament i la reassignaci�
 
 Pel que fa a la simulació temporal, la funció "FreeGate" s'encarrega d'alliberar de manera automàtica les portes dels avions que ja han sortit. D'altra banda, "AssignGateTime" coordina el procés realitzant l'assignació dinàmica de portes en franges horàries d'una hora i comptabilitzant els vols no assignats per manca d'espai. Per últim, "PlotDayOccupancy" analitza totes les dades anteriors per generar gràfics complets que mostren l'ocupació diària per terminals a cada franja horària, integrant a la interfície funcionalitats extres i creatives com a valor afegit.
 
+[Link al video de la versió 4](https://drive.google.com/file/d/1znWuIunp2UdZyBViWnNYJrFzSnbgVaA5/view?usp=drive_link)
+
 ## Funcionalitats extres
 Per a complementar el funcionament del programa, hem considerat oportú millorar la capacitat d'anàlisi i control de l'aeroport mitjançant la integració de quatre funcions innovadores que afegeixen dinamisme, detall i sostenibilitat al projecte.
 
@@ -50,7 +52,6 @@ Pel que fa a la conscienciació ambiental, la funció de càlcul d'emprempta de 
 
 Finalment, s'ha incorporat un Assistent de Connexions i Transbords enfocat a l'experiència de l'usuari, el qual avalua la viabilitat d'enllaçar dos vols consecutius calculant automàticament el temps real necessari per al desplaçament en contrast amb el temps disponible; la funció detalla els minuts restants de marge i determina si el passatger ha de passar o no per un control de passaports segons la naturalesa i procedència dels vols (tipus Schengen o No-Schengen).
 
-[Link al video de la versió 4]([https://drive.google.com/file/d/1znWuIunp2UdZyBViWnNYJrFzSnbgVaA5/view?usp=drive_link])
 
 
 
