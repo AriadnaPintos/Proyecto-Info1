@@ -8,7 +8,9 @@
 ---
 
 ## AUTORS I CONTINGUTS
-Aquest projecte ha estat desenvolupat pels membres del Grup 5: Ariadna Pintos, Pau Tondo i Júlia Adrubau; amb l'objectiu de desenvolupar un programa de gestió aeroportuària per tal d'analitzar els vols de l'Aeroport Josep Tarradelles Barcelona-El Prat (LEBL)
+Aquest projecte ha estat desenvolupat pels membres del Grup 5: Ariadna Pintos, Pau Tondo i Júlia Adrubau.
+
+Actualment, els aeroports gestionen centenars de vols cada dia. Per donar resposta a aquest problema, hem desenvolupat una aplicació de gestió aeroportuària que permet controlar de manera més eficient les portes d’embarcament, les arribades i les sortides dels avionsls Schengen i no Schengen, i les arribades i sortides al llarg del dia.
 
 <img src="ImatgeDeGrup.jpeg" width="500">
 
